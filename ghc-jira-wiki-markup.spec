@@ -6,7 +6,7 @@
 Summary:	Handle Jira wiki markup
 Name:		ghc-%{pkgname}
 Version:	1.3.0
-Release:	1
+Release:	2
 License:	MIT
 Group:		Development/Languages
 #Source0Download: http://hackage.haskell.org/package/jira-wiki-markup
