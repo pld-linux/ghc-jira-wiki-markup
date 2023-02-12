@@ -4,6 +4,7 @@
 #
 %define		pkgname	jira-wiki-markup
 Summary:	Handle Jira wiki markup
+Summary(pl.UTF-8):	Obsługa znaczników wiki w formacie Jiry
 Name:		ghc-%{pkgname}
 Version:	1.3.0
 Release:	2
@@ -29,8 +30,12 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_noautocompressdoc	*.haddock
 
 %description
-Parse jira wiki text into an abstract syntax tree for easy
+Parse Jira wiki text into an abstract syntax tree for easy
 transformation to other formats.
+
+%description -l pl.UTF-8
+Przetwarzanie tekstu wiki w formacie Jiry do abstrakcyjnego drzewa
+składniowego w celu łatwego przetwarzania do innych formatów.
 
 %package prof
 Summary:	Profiling %{pkgname} library for GHC
@@ -95,7 +100,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/jira-wiki-markup
 %{_libdir}/%{ghcdir}/package.conf.d/%{pkgname}.conf
 %dir %{_libdir}/%{ghcdir}/%{pkgname}-%{version}
-%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/*.so
+%attr(755,root,root) %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/*.so
 %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/*.a
 %exclude %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/*_p.a
 
