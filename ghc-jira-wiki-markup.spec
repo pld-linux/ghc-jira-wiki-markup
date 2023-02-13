@@ -7,7 +7,7 @@ Summary:	Handle Jira wiki markup
 Summary(pl.UTF-8):	Obsługa znaczników wiki w formacie Jiry
 Name:		ghc-%{pkgname}
 Version:	1.3.0
-Release:	2
+Release:	3
 License:	MIT
 Group:		Development/Languages
 #Source0Download: http://hackage.haskell.org/package/jira-wiki-markup
