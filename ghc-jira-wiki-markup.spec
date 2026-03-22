@@ -14,13 +14,33 @@ Group:		Development/Languages
 Source0:	http://hackage.haskell.org/package/%{pkgname}-%{version}/%{pkgname}-%{version}.tar.gz
 # Source0-md5:	0e8c20759654d476e246df7d8118c4e8
 URL:		http://hackage.haskell.org/package/jira-wiki-markup
-BuildRequires:	ghc >= 6.12.3
+BuildRequires:	ghc >= 8.0.1
+BuildRequires:	ghc-base >= 4.9
+BuildRequires:	ghc-base < 5
+BuildRequires:	ghc-mtl >= 2.2
+BuildRequires:	ghc-mtl < 2.3
+BuildRequires:	ghc-parsec >= 3.1
+BuildRequires:	ghc-parsec < 3.2
+BuildRequires:	ghc-text >= 1.1.1
+BuildRequires:	ghc-text < 1.3
 %if %{with prof}
-BuildRequires:	ghc-prof
+BuildRequires:	ghc-prof >= 8.0.1
+BuildRequires:	ghc-base-prof >= 4.9
+BuildRequires:	ghc-base-prof < 5
+BuildRequires:	ghc-mtl-prof >= 2.2
+BuildRequires:	ghc-mtl-prof < 2.3
+BuildRequires:	ghc-parsec-prof >= 3.1
+BuildRequires:	ghc-parsec-prof < 3.2
+BuildRequires:	ghc-text-prof >= 1.1.1
+BuildRequires:	ghc-text-prof < 1.3
 %endif
 BuildRequires:	rpmbuild(macros) >= 1.608
 %requires_eq	ghc
 Requires(post,postun):	/usr/bin/ghc-pkg
+Requires:	ghc-base >= 4.9
+Requires:	ghc-mtl >= 2.2
+Requires:	ghc-parsec >= 3.1
+Requires:	ghc-text >= 1.1.1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # debuginfo is not useful for ghc
@@ -42,10 +62,14 @@ Summary:	Profiling %{pkgname} library for GHC
 Summary(pl.UTF-8):	Biblioteka profilująca %{pkgname} dla GHC
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	ghc-base-prof >= 4.9
+Requires:	ghc-mtl-prof >= 2.2
+Requires:	ghc-parsec-prof >= 3.1
+Requires:	ghc-text-prof >= 1.1.1
 
 %description prof
-Profiling %{pkgname} library for GHC.  Should be installed when
-GHC's profiling subsystem is needed.
+Profiling %{pkgname} library for GHC. Should be installed when GHC's
+profiling subsystem is needed.
 
 %description prof -l pl.UTF-8
 Biblioteka profilująca %{pkgname} dla GHC. Powinna być zainstalowana
@@ -69,6 +93,7 @@ runhaskell Setup.lhs configure -v2 \
 	--docdir=%{_docdir}/%{name}-%{version}
 
 runhaskell Setup.lhs build
+
 runhaskell Setup.lhs haddock
 
 %install
@@ -79,8 +104,7 @@ runhaskell Setup.lhs copy --destdir=$RPM_BUILD_ROOT
 
 # work around automatic haddock docs installation
 %{__rm} -rf %{name}-%{version}-doc
-cp -a $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version} %{name}-%{version}-doc
-%{__rm} -r $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
+%{__mv} $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version} %{name}-%{version}-doc
 
 runhaskell Setup.lhs register \
 	--gen-pkg-config=$RPM_BUILD_ROOT%{_libdir}/%{ghcdir}/package.conf.d/%{pkgname}.conf
@@ -100,7 +124,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/jira-wiki-markup
 %{_libdir}/%{ghcdir}/package.conf.d/%{pkgname}.conf
 %dir %{_libdir}/%{ghcdir}/%{pkgname}-%{version}
-%attr(755,root,root) %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/*.so
+%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/*.so
 %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/*.a
 %exclude %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/*_p.a
 
